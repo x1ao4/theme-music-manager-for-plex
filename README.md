@@ -84,3 +84,20 @@ user_theme = true
 # 是否在删除主题音乐时删除 Plex 提供的主题音乐，true 代表删除，false 代表不删除
 plex_theme = false
 ```
+
+## 使用方法
+### plex-theme-uploader
+1. 将仓库克隆或下载到计算机上的一个目录中。
+2. 修改 `uploader.command (Mac)` 或 `uploader.bat (Win)` 中的路径，以指向你保存的 `plex-theme-uploader.py` 脚本。
+3. 打开 `config.ini`，填写你的 Plex 服务器地址（`address`）和 [X-Plex-Token](https://support.plex.tv/articles/204059436-finding-an-authentication-token-x-plex-token/)（`token`），按照需要设置其他配置选项。
+4. 将主题音乐文件按照其对应项目在 Plex 媒体库中的名称命名，并移动至 `uploads` 文件夹内。
+5. 双击运行 `uploader.command` 或 `uploader.bat` 脚本以执行 `plex-theme-uploader.py` 脚本。
+6. 脚本将自动读取 `uploads` 文件夹内的所有文件，并尝试将这些文件作为主题音乐上传到 Plex 服务器上对应的项目中。你可以在控制台查看处理进度，若同一个文件在媒体库内匹配到了多个不同年份的项目，将会需要你在控制台手动选择需要上传主题音乐的项目，脚本会根据选择上传主题音乐，并继续处理其余文件，待所有文件都处理完毕后，脚本会自动结束运行。
+
+### plex-theme-deleter
+1. 将仓库克隆或下载到计算机上的一个目录中。
+2. 修改 `deleter.command (Mac)` 或 `deleter.bat (Win)` 中的路径，以指向你保存的 `plex-theme-deleter.py` 脚本。
+3. 打开 `config.ini`，填写你的 Plex 服务器地址（`address`）、[X-Plex-Token](https://support.plex.tv/articles/204059436-finding-an-authentication-token-x-plex-token/)（`token`）和 Plex 服务器的元数据文件夹目录（`metadata_base_directory`），按照需要设置其他配置选项。
+4. 双击运行 `deleter.command` 或 `deleter.bat` 脚本以执行 `plex-theme-deleter.py` 脚本。
+5. 输入要删除主题音乐的项目名称（若有多个项目的主题音乐需要删除，请用分号隔开多个名称），按回车。
+6. 脚本将尝试定位 Plex 服务器上对应项目的主题音乐元数据文件的存储位置，并删除文件所在的文件夹。你可以在控制台查看处理进度，若同一个项目名称在媒体库内匹配到了多个不同年份的项目，将会需要你在控制台手动选择需要删除主题音乐的项目，脚本会根据选择删除主题音乐，并继续处理其余项目名称，待所有项目名称都处理完毕后，脚本会自动结束运行。
