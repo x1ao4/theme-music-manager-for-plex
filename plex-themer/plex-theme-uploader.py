@@ -47,7 +47,7 @@ def upload_themes(plex_server, item_name, item_year, theme_path, config_file, fi
         if language == 'zh':
             print(f"未找到名为 \"{item_name}\" 的项目")
         elif language == 'en':
-            print(f"No item named \"{item_name}\" found")
+            print(f"No item titled \"{item_name}\" found")
         return
     elif len(matched_items) > 1:
         years = [item.year for _, item in matched_items if hasattr(item, 'year')]
