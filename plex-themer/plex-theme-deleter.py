@@ -52,9 +52,9 @@ def delete_and_print(item, metadata_base_directory, language, user_theme, plex_t
             pass
     year_info = f" ({item.year})" if hasattr(item, 'year') else ""
     if language == 'zh':
-        print(f"已成功删除 \"{item.librarySectionTitle}\" 中的{item_type_dict[item.type]} \"{item.title}{year_info}\" 的所有主题音乐")
+        print(f"已成功删除 \"{item.librarySectionTitle}\" 中的{item_type_dict[item.type]} \"{item.title}{year_info}\" 的主题音乐")
     elif language == 'en':
-        print(f"Successfully deleted all theme music for {item_type_dict[item.type]} \"{item.title}{year_info}\" in \"{item.librarySectionTitle}\"")
+        print(f"Successfully deleted theme music for {item_type_dict[item.type]} \"{item.title}{year_info}\" in \"{item.librarySectionTitle}\"")
 
 def delete_themes(plex_server, item_name, item_year, config_file, metadata_base_directory, language, user_theme, plex_theme):
     config = configparser.ConfigParser()
