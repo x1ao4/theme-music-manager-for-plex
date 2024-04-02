@@ -27,7 +27,7 @@ def upload_and_print(item, theme_path, item_type_dict, language):
     elif language == 'en':
         print(f"Successfully uploaded theme music for {item_type_dict[item.type]} \"{item.title}{year_info}\" in \"{item.librarySectionTitle}\"")
 
-def upload_themes(plex_server, item_name, item_year, theme_path, config_file, first_file, language):
+def upload_themes(plex_server, item_title, item_year, theme_path, config_file, first_file, language):
     config = configparser.ConfigParser()
     config.read(config_file)
     item_types = [item_type for item_type in ["movie", "show", "artist", "collection"] if config.getboolean('search', item_type)]
@@ -40,14 +40,14 @@ def upload_themes(plex_server, item_name, item_year, theme_path, config_file, fi
     for item_type in item_types:
         items = plex_server.library.all(libtype=item_type)
         for item in items:
-            if item.title == item_name and (not item_year or (hasattr(item, 'year') and item.year == item_year)):
+            if item.title == item_title and (not item_year or (hasattr(item, 'year') and item.year == item_year)):
                 matched_items.append((item_type, item))
 
     if len(matched_items) == 0:
         if language == 'zh':
-            print(f"未找到名为 \"{item_name}\" 的项目")
+            print(f"未找到名为 \"{item_title}\" 的项目")
         elif language == 'en':
-            print(f"No item titled \"{item_name}\" found")
+            print(f"No item titled \"{item_title}\" found")
         return
     elif len(matched_items) > 1:
         years = [item.year for _, item in matched_items if hasattr(item, 'year')]
@@ -89,15 +89,15 @@ def main():
     for theme_file in os.listdir(upload_dir):
         if theme_file.startswith('.'):
             continue
-        item_name, _ = os.path.splitext(theme_file)
-        match = re.match(r"(.*?)\s*[\(\（](\d{4})[\)\）]", item_name)
+        item_title, _ = os.path.splitext(theme_file)
+        match = re.match(r"(.*?)\s*[\(\（](\d{4})[\)\）]", item_title)
         if match:
-            item_name, item_year = match.groups()
+            item_title, item_year = match.groups()
             item_year = int(item_year)
         else:
             item_year = None
         theme_path = os.path.join(upload_dir, theme_file)
-        upload_themes(plex_server, item_name, item_year, theme_path, config_file, first_file, language)
+        upload_themes(plex_server, item_title, item_year, theme_path, config_file, first_file, language)
         first_file = False
 
         if config.getboolean('mode', 'delete_after_upload'):
