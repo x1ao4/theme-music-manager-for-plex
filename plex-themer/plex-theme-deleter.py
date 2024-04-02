@@ -13,15 +13,16 @@ def initialize_settings(config_file):
     plex_token = config.get('server', 'token')
     metadata_base_directory = config.get('server', 'metadata_base_directory')
     language = config.get('server', 'language')
+    continuous_mode = config.getboolean('mode', 'continuous_mode')
     user_theme = config.getboolean('mode', 'user_theme')
     plex_theme = config.getboolean('mode', 'plex_theme')
 
     plex_server = plexapi.server.PlexServer(baseurl=plex_url, token=plex_token)
     if language == 'zh':
-        print(f"已成功连接到服务器：{plex_server.friendlyName}\n")
+        print(f"已成功连接到服务器：{plex_server.friendlyName}")
     elif language == 'en':
         print(f"Successfully connected to server: {plex_server.friendlyName}\n")
-    return plex_server, metadata_base_directory, language, user_theme, plex_theme
+    return plex_server, metadata_base_directory, language, continuous_mode, user_theme, plex_theme
 
 def _get_metadata_path(item, metadata_base_directory):
     metadata_type_map = {
@@ -104,20 +105,24 @@ def delete_themes(plex_server, item_name, item_year, config_file, metadata_base_
 
 def main():
     config_file = Path(__file__).parent / 'config.ini'
-    plex_server, metadata_base_directory, language, user_theme, plex_theme = initialize_settings(config_file)
+    plex_server, metadata_base_directory, language, continuous_mode, user_theme, plex_theme = initialize_settings(config_file)
 
-    item_names = input("请输入要删除主题音乐的项目名称（多个名称用分号隔开）：") if language == 'zh' else input("Please enter the name(s) of the item(s) from which you want to delete theme music (multiple names separated by semicolons): ")
-    item_names = [item.strip() for item in re.split(';|；', item_names)]
-    print()
+    while True:
+        item_names = input("\n请输入要删除主题音乐的项目名称（多个名称用分号隔开）：") if language == 'zh' else input("Please enter the name(s) of the item(s) from which you want to delete theme music (multiple names separated by semicolons): ")
+        item_names = [item.strip() for item in re.split(';|；', item_names)]
+        print()
 
-    for item_name in item_names:
-        match = re.match(r"(.*?)\s*[\(\（](\d{4})[\)\）]", item_name.strip())
-        if match:
-            item_name, item_year = match.groups()
-            item_year = int(item_year)
-        else:
-            item_year = None
-        delete_themes(plex_server, item_name, item_year, config_file, metadata_base_directory, language, user_theme, plex_theme)
+        for item_name in item_names:
+            match = re.match(r"(.*?)\s*[\(\（](\d{4})[\)\）]", item_name.strip())
+            if match:
+                item_name, item_year = match.groups()
+                item_year = int(item_year)
+            else:
+                item_year = None
+            delete_themes(plex_server, item_name, item_year, config_file, metadata_base_directory, language, user_theme, plex_theme)
+
+        if not continuous_mode:
+            break
 
 if __name__ == "__main__":
     main()
