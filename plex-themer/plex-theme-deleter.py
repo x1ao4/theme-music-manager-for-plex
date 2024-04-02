@@ -77,7 +77,7 @@ def delete_themes(plex_server, item_name, item_year, config_file, metadata_base_
         if language == 'zh':
             print(f"未找到名为 \"{item_name}\" 的项目")
         elif language == 'en':
-            print(f"No item named \"{item_name}\" found")
+            print(f"No item titled \"{item_name}\" found")
         return
     elif len(matched_items) > 1:
         years = [item.year for _, item in matched_items if hasattr(item, 'year')]
@@ -108,7 +108,7 @@ def main():
     plex_server, metadata_base_directory, language, continuous_mode, user_theme, plex_theme = initialize_settings(config_file)
 
     while True:
-        item_names = input("\n请输入要删除主题音乐的项目名称（多个名称用分号隔开）：") if language == 'zh' else input("Please enter the name(s) of the item(s) from which you want to delete theme music (multiple names separated by semicolons): ")
+        item_names = input("\n请输入要删除主题音乐的项目名称（多个名称用分号隔开）：") if language == 'zh' else input("Please enter the title(s) of the item(s) from which you want to delete theme music (multiple names separated by semicolons): ")
         item_names = [item.strip() for item in re.split(';|；', item_names)]
         print()
 
