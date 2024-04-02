@@ -57,7 +57,7 @@ def delete_and_print(item, metadata_base_directory, language, user_theme, plex_t
     elif language == 'en':
         print(f"Successfully deleted theme music for {item_type_dict[item.type]} \"{item.title}{year_info}\" in \"{item.librarySectionTitle}\"")
 
-def delete_themes(plex_server, item_name, item_year, config_file, metadata_base_directory, language, user_theme, plex_theme):
+def delete_themes(plex_server, item_title, item_year, config_file, metadata_base_directory, language, user_theme, plex_theme):
     config = configparser.ConfigParser()
     config.read(config_file)
     item_types = [item_type for item_type in ["movie", "show", "artist", "collection"] if config.getboolean('search', item_type)]
@@ -70,14 +70,14 @@ def delete_themes(plex_server, item_name, item_year, config_file, metadata_base_
     for item_type in item_types:
         items = plex_server.library.all(libtype=item_type)
         for item in items:
-            if item.title == item_name and (not item_year or (hasattr(item, 'year') and item.year == item_year)):
+            if item.title == item_title and (not item_year or (hasattr(item, 'year') and item.year == item_year)):
                 matched_items.append((item_type, item))
 
     if len(matched_items) == 0:
         if language == 'zh':
-            print(f"未找到名为 \"{item_name}\" 的项目")
+            print(f"未找到名为 \"{item_title}\" 的项目")
         elif language == 'en':
-            print(f"No item titled \"{item_name}\" found")
+            print(f"No item titled \"{item_title}\" found")
         return
     elif len(matched_items) > 1:
         years = [item.year for _, item in matched_items if hasattr(item, 'year')]
@@ -108,18 +108,18 @@ def main():
     plex_server, metadata_base_directory, language, continuous_mode, user_theme, plex_theme = initialize_settings(config_file)
 
     while True:
-        item_names = input("\n请输入要删除主题音乐的项目名称（多个名称用分号隔开）：") if language == 'zh' else input("Please enter the title(s) of the item(s) from which you want to delete theme music (multiple names separated by semicolons): ")
-        item_names = [item.strip() for item in re.split(';|；', item_names)]
+        item_titles = input("\n请输入要删除主题音乐的项目名称（多个名称用分号隔开）：") if language == 'zh' else input("Please enter the title(s) of the item(s) from which you want to delete theme music (multiple names separated by semicolons): ")
+        item_titles = [item.strip() for item in re.split(';|；', item_titles)]
         print()
 
-        for item_name in item_names:
-            match = re.match(r"(.*?)\s*[\(\（](\d{4})[\)\）]", item_name.strip())
+        for item_title in item_titles:
+            match = re.match(r"(.*?)\s*[\(\（](\d{4})[\)\）]", item_title.strip())
             if match:
-                item_name, item_year = match.groups()
+                item_title, item_year = match.groups()
                 item_year = int(item_year)
             else:
                 item_year = None
-            delete_themes(plex_server, item_name, item_year, config_file, metadata_base_directory, language, user_theme, plex_theme)
+            delete_themes(plex_server, item_title, item_year, config_file, metadata_base_directory, language, user_theme, plex_theme)
 
         if not continuous_mode:
             break
