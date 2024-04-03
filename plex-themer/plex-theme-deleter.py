@@ -21,7 +21,7 @@ def initialize_settings(config_file):
     if language == 'zh':
         print(f"已成功连接到服务器：{plex_server.friendlyName}")
     elif language == 'en':
-        print(f"Successfully connected to server: {plex_server.friendlyName}\n")
+        print(f"Successfully connected to server: {plex_server.friendlyName}")
     return plex_server, metadata_base_directory, language, continuous_mode, user_theme, plex_theme
 
 def _get_metadata_path(item, metadata_base_directory):
@@ -108,7 +108,7 @@ def main():
     plex_server, metadata_base_directory, language, continuous_mode, user_theme, plex_theme = initialize_settings(config_file)
 
     while True:
-        item_titles = input("\n请输入要删除主题音乐的项目名称（多个名称用分号隔开）：") if language == 'zh' else input("Please enter the title(s) of the item(s) from which you want to delete theme music (multiple titles separated by semicolons): ")
+        item_titles = input("\n请输入要删除主题音乐的项目名称（多个名称用分号隔开）：") if language == 'zh' else input("\nPlease enter the title(s) of the item(s) from which you want to delete theme music (multiple titles separated by semicolons): ")
         item_titles = [item.strip() for item in re.split(';|；', item_titles)]
         print()
 
