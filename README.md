@@ -146,7 +146,7 @@ Please select the item(s) to which you want to add theme music (multiple items s
 Successfully uploaded theme music for Movie "Charlie's Angels (2019)" in "Movies"
 Successfully uploaded theme music for Movie "Kung Fu Panda (2008)" in "Movies"
 ```
-Run the `plex-theme-deleter.py` script and input the item names from which you want to delete the theme music. For example:
+Run the `plex-theme-deleter.py` script and input the item titles from which you want to delete the theme music. For example:
 ```
 Successfully connected to server: x1ao4
 
