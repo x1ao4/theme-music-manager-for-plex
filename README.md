@@ -108,6 +108,7 @@ plex_theme = false
 - 请确保你提供了正确的 Plex 服务器地址和 X-Plex-Token。
 - 请确保你提供了正确的 Plex 元数据目录，你可以参考[这里](https://support.plex.tv/articles/202915258-where-is-the-plex-media-server-data-directory-located/)找到你的 `Plex Media Server` 文件夹，`Metadata` 文件夹就在该目录下。
 - 脚本仅支持中文和英文，请确保你设置了正确的语言。
+- 上传的音频文件的大小不可超过 10MB，否则将会报错并导致上传失败。
 - 请勿删除 `uploads` 和 `themes` 文件夹，可以删除文件夹内的 `.gitkeep` 文件。
 - 若你在删除了 Plex 提供的主题音乐后，想恢复该主题音乐，可以先对项目执行 `取消匹配`，再 `重新匹配` 即可恢复主题音乐。
 - 由于 `plex-theme-deleter.py` 是通过文件系统删除主题音乐文件的，请在存储 Plex 元数据的设备上运行该脚本，并确保脚本有足够的权限删除文件。（`plex-theme-uploader.py` 无此限制）
@@ -226,6 +227,7 @@ plex_theme = false
 - Make sure you've provided the correct Plex server address and X-Plex-Token.
 - Make sure you've provided the correct Plex metadata directory. You can refer to [here](https://support.plex.tv/articles/202915258-where-is-the-plex-media-server-data-directory-located/) to find your `Plex Media Server` folder, the `Metadata` folder is under this directory.
 - The script only supports Chinese and English. Make sure you have set the correct language.
+- The size of the uploaded audio file must not exceed 10MB, otherwise, an error will occur and the upload will fail.
 - Do not delete the `uploads` and `themes` folders, but you may delete the `.gitkeep` files inside them.
 - If you want to restore Plex-provided theme music after deleting it, you can first `Unmatch` the item and then `Match` it again to restore the theme music.
 - Since `plex-theme-deleter.py` deletes theme music files through the file system, please run this script on the device where Plex metadata is stored and ensure that the script has sufficient permissions to delete files. (`plex-theme-uploader.py` does not have this restriction)
